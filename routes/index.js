@@ -12,8 +12,8 @@ const dataControler = require('../controllers/dataController')
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/import', function(req, res, next) {
+  res.render('import', { title: 'Import' });
 });
 
 router.post('/import', upload.single('file'), async(req, res, next) =>{

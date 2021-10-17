@@ -13,3 +13,10 @@ npx sequelize db:create
 localhost:3000/import
 
 *utilizado o Insomnia para fazer a requisição http POST
+
+* rota para buscar os dados da omni
+localhost:3000/api/clientes
+
+no arquivo service/app.js estao nos comentarios o corpo necessário para cada requisição, chegado pelo Insomnia.
+
+*criado uma rota de cadastro e login com validação de senha pela bcrypt
