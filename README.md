@@ -19,4 +19,4 @@ localhost:3000/api/clientes
 
 no arquivo service/app.js estao, nos comentarios, o corpo necessário para cada requisição, checado pelo Insomnia.
 
-*criado uma rota de cadastro e login com validação de senha pela bcrypt
+*criado uma rota de cadastro e login com criptografia de senha pela bcrypt, e tabela de user no bd, salvando usuario e senha(criptografada), e validando no login
