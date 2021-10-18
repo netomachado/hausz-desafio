@@ -4,40 +4,42 @@ const apiController = require('../controllers/apiController')
 const loginController = require('../controllers/loginController')
 
 router.get('/cadastro', function(req, res, next) {
-  res.render('cadastro', {title: Cadastro });
+  res.render('cadastro', {title: "Cadastro" });
 });
 
 router.post("/cadastro", async function (req, res, next) {
   const { nome, senha } = req.body;
-
-  const { senha: senhaNaoUsada, ...usuario } = await loginController.criarUsuario({
-    nome,
-    senha
-  }).then(user => user.dataValues);
+  
+  const usuario = await loginController.criarUsuario({ nome, senha } );
 
   req.session.usuario = usuario;
  
 
-  res.redirect("/clientes");
+  return res.redirect("/api/clientes");
 });
 
 router.get("/login", function (req, res, next) {
+  const { session } = req;
   res.render("login", { title: "Login" });
 });
 
 router.post("/login", async function (req, res, next) {
-  const { email, senha } = req.body;
+  const { nome, senha } = req.body;
 
-  const { senha: senhaNaoUsada, ...usuario } = await loginController.logarUsuario({
-    email,
-    senha,
-  });
+  let usuario=  loginController.logarUsuario(
+    nome,
+    senha
+  );
 
   req.session.usuario = usuario;
 
-  res.redirect("/clientes");
+  return res.redirect("/api/clientes");
 });
 
+router.get("/clientes", function (req, res, next) {
+  const { session } = req;
+  res.render("clientes", { title: "clientes" });
+});
 
 router.post("/clientes", async function (req, res, next) {
   
@@ -46,7 +48,7 @@ router.post("/clientes", async function (req, res, next) {
     const lista = await apiController.postClientes(info);
   
     console.log(lista.data)
-    res.json(lista.data);
+    return res.render('clientes');
   });
 
 router.post("/pedidos", async function (req, res, next) {
@@ -56,7 +58,7 @@ router.post("/pedidos", async function (req, res, next) {
   const lista = await apiController.postPedidos(info);
 
   console.log(lista.data)
-  res.json(lista.data);
+  return res.json(lista.data);
 });
 
 

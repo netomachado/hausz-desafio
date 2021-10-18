@@ -1,7 +1,7 @@
 const { User } = require('../database/models');
 
-exports.criarUmUsuario = (user) => User.create(user);
+exports.criarUmUsuario = ({ nome, senhaCriptografada:senha }) => User.create({ nome, senha });
 
-exports.listarUsuarioPorSenha = ({ nome }) => {
+exports.buscarUsuarioPorNome = (nome) => {
   const userEncontrado = User.findOne({ where: { nome }});
   return userEncontrado;}

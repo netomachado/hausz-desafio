@@ -4,23 +4,23 @@ const userModels = require('../models/userModels');
 exports.criarUsuario = ({ nome, senha }) => {
   const senhaCriptografada = bcrypt.hashSync(senha);
 
-  const user = userModels.criarUmUsuario({ nome, senha: senhaCriptografada });
+  const usuario = userModels.criarUmUsuario({ nome, senhaCriptografada });
 
-  return user;
+  return usuario;
 };
 
-exports.logarUsuario = async ({ nome, senha }) => {
-  const user = await userModels.listarUsuarioPorSenha({ nome });
+exports.logarUsuario = async (nome, senha) => {
+  const usuario = await userModels.buscarUsuarioPorNome(nome);
   
-  if (!user) {
+  if (!usuario) {
     throw new Error("Access denied");
   }
 
-  const senhaCheck = bcrypt.compareSync(senha, user.senha);
+  const senhaCheck = bcrypt.compareSync(senha, usuario.senhaCriptografada);
 
   if (!senhaCheck) {
     throw new Error("Access denied");
   }
 
-  return user.dataValues;
+  return usuario.dataValues;
 };

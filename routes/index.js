@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const multer = require("multer");
 const upload = multer();
-const csv = require('csv-parser');
 const fs = require('fs');
 const { Readable } = require('stream');
 const readline = require('readline');
@@ -17,9 +16,10 @@ router.get('/import', function(req, res, next) {
 });
 
 router.post('/import', upload.single('file'), async(req, res, next) =>{
-  const { file } = req;
-  const { buffer }= file;
-
+  const file = req.file;
+  
+  const { buffer } = file;
+  
   const readableFile = new Readable();
   readableFile.push(buffer);
   readableFile.push(null);
@@ -27,7 +27,7 @@ router.post('/import', upload.single('file'), async(req, res, next) =>{
   const productsLine = readline.createInterface({
     input: readableFile
   })
-
+  
   const products= [];
 
   for await (let line of productsLine){
@@ -85,12 +85,11 @@ router.post('/import', upload.single('file'), async(req, res, next) =>{
       cancellation_policy: productLineSplit[46],
       reviews_per_month: productLineSplit[47]
 });
-  }
+}
   
-  await dataControler.criarBd(products[2]);
-
-  return res.send(products[2]);
-  // return res.status(200).json({status: "Tabela importada"}, products[2]);
+  await dataControler.criarBd(products);
+ 
+  return res.send(products);
 
 });
 

@@ -1,11 +1,6 @@
 module.exports = (sequelize, DataTypes)=>{
   const Data = sequelize.define('Data',{
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },  
+      
     listing_url:DataTypes.STRING,
     scrape_id: DataTypes.INTEGER,
     last_scraped: DataTypes.STRING,
@@ -53,11 +48,11 @@ module.exports = (sequelize, DataTypes)=>{
     jurisdiction_names: DataTypes.STRING,
     instant_bookable: DataTypes.STRING,
     cancellation_policy: DataTypes.STRING,
-    reviews_per_month: DataTypes.STRING,
+    reviews_per_month: DataTypes.STRING
       },
       {
-      underscored:true
-  });
+      tableName:'datas'
+});
 
   
    

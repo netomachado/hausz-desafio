@@ -57,8 +57,6 @@ module.exports = {
       instant_bookable: Sequelize.STRING,
       cancellation_policy: Sequelize.STRING,
       reviews_per_month: Sequelize.STRING,
-
-
       created_at: {
         type: "TIMESTAMP",
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
